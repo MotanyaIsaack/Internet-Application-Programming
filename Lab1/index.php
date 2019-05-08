@@ -1,6 +1,7 @@
 <?php
     include_once 'user.php';
     include_once 'DBConnector.php';
+    include_once 'fileUploader.php';
     $first_name = '';
     $last_name = '';
     $city = '';
@@ -17,26 +18,40 @@
         $city = $_POST['city_name'];
         $username = $_POST['username'];
         $password = $_POST['password'];
+        $data = $_FILES['filetoUpload'];
 
         //Creating a new user object
         $user = new User($first_name,$last_name,$city,$username,$password);
+        //Create the object for File Uploader
+        $uploader = new FileUploader($data);
+
         if (!$user->validateForm()) {
-            # code...{
             $user->createFormErrorSessions();
             header("Refresh:0");
-            die();
+            return;
         }else if($user->isUserExists($username)){
-            // print($user->isUserExists($username));
+            $user->createUsernameErrorSessions();
             header("Refresh:0");
-            die();
+            return;
+        }else{
+            $res = $user->save();
+            print_r($res);
         }
-        $res = $user->save();
+        
+        
+        
+        $file_upload_response = $uploader->uploadFile();
+        // print_r($file_upload_response);
+        
 
         //Check if the operation occured succesfully
-        if ($res) {
+        if ($res && $file_upload_response === TRUE) {
+            
             $message = "Save Operation Was Succesful";
+            die();
         }else{
             $message = "Save Operation Was Not Succesful";
+            die();
         }
         $conn->closeDatabase();
     }
@@ -70,32 +85,17 @@
       }
     </style>
     <!-- Custom styles for this template -->
-    <link href="floating-labels.css" rel="stylesheet">
-    <link href="floating-labels.css" rel="stylesheet">
+    <link href="css/floating-labels.css" rel="stylesheet">
     <script src="js/validate.js"></script>
 </head>
 <body>
      
     <form class="form-signin" method="post" style="margin-left:100px;margin-right:200px;" 
         name="user_details" id="user_details" onsubmit="return validateForm()" 
-            action="<?=$_SERVER['PHP_SELF']?>">
+            action="<?=$_SERVER['PHP_SELF']?>" enctype="multipart/form-data">
 
         <div class="text-center"> 
-        <div id="form-error">
-            <?php
-                if (isset($message)) {
-                    echo
-                    '
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        '.$message.'
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    ';
-                }
-            ?>
-        </div>  
+        
         <div id="form-errors">
             <?php
                 session_start();
@@ -126,8 +126,8 @@
         </div>
 
         <div class="form-label-group">
-            <input name="last_name" type="text" id="inputPassword" class="form-control" placeholder="Last Name">
-            <label for="inputPassword">Last Name</label>
+            <input name="last_name" type="text" id="inputLastname" class="form-control" placeholder="Last Name">
+            <label for="inputLastname">Last Name</label>
         </div>
 
         <div class="form-label-group">
@@ -144,12 +144,31 @@
             <label for="inputPassword1">Password</label>
         </div>
 
+        <div class="form-label-group">
+            <input type="file" name="filetoUpload" class="form-control-file" id="exampleFormControlFile1">        
+        </div>
+
         
         <button name="btn-save" class="btn btn-primary" type="submit">SAVE</button>
         <a class="btn btn-primary" href="login.php" role="button">LOGIN</a>
     </form>
 
     <div>
+    <div id="form-error">
+        <?php
+            if (isset($message)) {
+                echo
+                '
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    '.$message.'
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                ';
+            }
+        ?>
+    </div>  
         <table id="example" style="padding-left:-100px;" class="table">
             <thead class="thead-dark">
             <tr>
@@ -157,6 +176,7 @@
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">City Name</th>
+                <th scope="col">Username</th>
             </tr> 
             </thead>
             <tbody>
@@ -169,6 +189,7 @@
                                 echo "<td>" . $row['first_name'] . "</td>";
                                 echo "<td>" . $row['last_name'] . "</td>";
                                 echo "<td>" . $row['user_city'] . "</td>";
+                                echo "<td>" . $row['username'] . "</td>";
                             echo "</tr>";
                         }
                     }

@@ -107,6 +107,11 @@
             $_SESSION['form_errors'] = "All fields are required";
         }
 
+        public function createUsernameErrorSessions(){
+            session_start();
+            $_SESSION['form_errors'] = "Username Exists";
+        }
+
         public function hashPassword(){
             $this->password = password_hash($this->password,PASSWORD_DEFAULT);
         }

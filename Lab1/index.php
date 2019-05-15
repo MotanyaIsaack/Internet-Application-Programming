@@ -7,8 +7,12 @@
     $city = '';
     $uname = '';
     $pass = '';
+    $utc_timestamp = '';
+    $data = '';
+    $offset = '';
+    
 
-    $user = new User($first_name,$last_name,$city,$uname,$pass);
+    $user = new User($first_name,$last_name,$city,$uname,$pass,$data,$utc_timestamp,$offset);
     $conn = new DBConnector();
     
 
@@ -18,10 +22,13 @@
         $city = $_POST['city_name'];
         $username = $_POST['username'];
         $password = $_POST['password'];
+        $utc_timestamp = $_POST['utc_timestamp'];
+        $offset = $_POST['time_zone_offset'];
         $data = $_FILES['filetoUpload'];
+        // die($data["name"]);
 
         //Creating a new user object
-        $user = new User($first_name,$last_name,$city,$username,$password);
+        $user = new User($first_name,$last_name,$city,$username,$password,$data,$utc_timestamp,$offset);
         //Create the object for File Uploader
         $uploader = new FileUploader($data);
 
@@ -35,23 +42,18 @@
             return;
         }else{
             $res = $user->save();
-            print_r($res);
         }
         
         
-        
+       
         $file_upload_response = $uploader->uploadFile();
-        // print_r($file_upload_response);
         
 
         //Check if the operation occured succesfully
         if ($res && $file_upload_response === TRUE) {
-            
             $message = "Save Operation Was Succesful";
-            die();
         }else{
             $message = "Save Operation Was Not Succesful";
-            die();
         }
         $conn->closeDatabase();
     }
@@ -87,6 +89,7 @@
     <!-- Custom styles for this template -->
     <link href="css/floating-labels.css" rel="stylesheet">
     <script src="js/validate.js"></script>
+    
 </head>
 <body>
      
@@ -151,6 +154,9 @@
         
         <button name="btn-save" class="btn btn-primary" type="submit">SAVE</button>
         <a class="btn btn-primary" href="login.php" role="button">LOGIN</a>
+        
+        <input type="hidden" name="utc_timestamp" id="utc_timestamp" value="">
+        <input type="hidden" name="time_zone_offset" id="time_zone_offset" value="">
     </form>
 
     <div>
@@ -205,6 +211,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="js/timezone.js"></script>
 <script>
     $(document).ready(function() {
         $('#example').DataTable();

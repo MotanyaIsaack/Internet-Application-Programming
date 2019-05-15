@@ -11,16 +11,22 @@
 
         private $username;
         private $password;
+        private $data;
+        private $utc_timestamp;
+        private $offset;
         
 
         // We can use our constructor to initialize our values
         // member variables cannot be instantiated from elsewhere; They private;
-        function __construct($first_name,$last_name,$city_name,$username,$password){
+        function __construct($first_name,$last_name,$city_name,$username,$password,$data,$utc_timestamp,$offset){
             $this->first_name = $first_name;
             $this->last_name = $last_name;
             $this->city_name = $city_name;
             $this->username = $username;
             $this->password = $password;
+            $this->data = $data;
+            $this->utc_timestamp = $utc_timestamp;
+            $this->offset = $offset;
             $this->conn = new DBConnector();
             // $this->conn = $this->conn->conn;
         }
@@ -30,7 +36,7 @@
          */
 
         public static function create(){
-            $instance = new self(null,null,null,null,null);
+            $instance = new self(null,null,null,null,null,null,null,null);
             return $instance;
         }
         
@@ -73,10 +79,15 @@
             $uname = $this->username;
             $this->hashPassword();
             $pass = $this->password;
-            $sql = "INSERT INTO user(first_name,last_name,user_city,username,password)
-                     VALUES('$fn','$ln','$city','$uname','$pass')";
-       
+            $filename = $this->data['name'];
+            $utc_timestamp = $this->utc_timestamp;
+            $offset = $this->offset;
+            $sql = "INSERT INTO user(first_name,last_name,user_city,username,password,filename,uct_timestamp,offset)
+                     VALUES('$fn','$ln','$city','$uname','$pass','$filename','$utc_timestamp','$offset')";
+            // die(print_r($sql));
             $res = $this->conn->getConnection()->query($sql);
+            // die(print_r($sql));
+            
             return $res;
         }
         public function readAll(){

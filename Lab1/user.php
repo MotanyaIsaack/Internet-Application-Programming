@@ -157,8 +157,9 @@
         public function logout(){
             session_start();
             unset($_SESSION['username']);
+            unset($_SESSION['id']);
             session_destroy();
-            header('location:lab1.php');
+            header('location:index.php');
         }
 
         public function isUserExists($username){

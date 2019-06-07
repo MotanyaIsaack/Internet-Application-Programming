@@ -104,3 +104,20 @@ body {
 .mastfoot {
   color: rgba(255, 255, 255, .5);
 }
+
+.input-group-text{
+  color: white;
+  background-color: #333333;
+  border-color: #333333;
+}
+.apikey{
+  width: 30%;
+  text-align: center;
+  position: absolute;
+  left: 47%;
+  top: 63%;
+  transform: translate(-50%, -50%);
+}
+.area-api{
+  width: 300px;
+}

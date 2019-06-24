@@ -22,9 +22,7 @@
                         <th scope="row">{{ $review->id }}</th>
                         <td>{{ $review->review }}</td>
                         <td>{{ $review->cars->make }}</td>
-                        <td><a type="button" href={{ route('reviews.show', $review->car) }}
-                                class="btn btn-dark">Reviews</a>
-                        </td>
+                       
                     </tr>
                 </tbody>
             </table>

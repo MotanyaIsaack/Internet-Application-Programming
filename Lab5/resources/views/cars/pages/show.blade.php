@@ -15,6 +15,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Make</th>
                         <th scope="col">Model</th>
+                        <th scope="col">Reviews</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,7 +23,7 @@
                         <th scope="row">{{ $car->id }}</th>
                         <td>{{ $car->make }}</td>
                         <td>{{ $car->model }}</td>
-                        <td><a type="button" href={{ route('reviews.show', $car->id) }} class="btn btn-dark">Reviews</a>
+                        <td><a type="button" href={{ route('reviews.show', $car->id) }} class="btn btn-sm">Reviews</a>
                         </td>
                     </tr>
                 </tbody>

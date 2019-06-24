@@ -11,11 +11,11 @@
             <a href="/car/new" class="list-group-item list-group-item-action">Add Car</a>
             {{-- <a href="/fees/create" class="list-group-item list-group-item-action">Record Fee Payment</a> --}}
         </ul>
-        <h2>Search</h2>
+        {{-- <h2>Search</h2>
         {{ Form::open(['action'=>'ReviewsController@search','method'=>'POST','class'=>'form-inline mt-2 mt-md-0']) }}
         <input name="student_id" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        {{ Form::close() }}
+        {{ Form::close() }} --}}
     </div>
     <div class="float-left cars-table">
         <table id="cars" class="table table-stripped align-content-center">
@@ -25,6 +25,7 @@
                     <th scope="col">Make</th>
                     <th scope="col">Model</th>
                     <th scope="col">Date of Production</th>
+                    <th scope="col">Review</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +36,7 @@
                     <td>{{$car->make}}</td>
                     <td>{{$car->model}}</td>
                     <td>{{$car->produced_on}}</td>
-                    <td><a type="button" href={{ route('reviews.create', $car->id) }} class="btn btn-dark">Review</a></td>
+                    <td><a type="button" href={{ route('reviews.create', $car->id) }} class="btn btn-sm">Review</a></td>
                 </tr>
 
                 @endforeach

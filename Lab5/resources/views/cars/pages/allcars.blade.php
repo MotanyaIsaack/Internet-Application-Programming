@@ -9,7 +9,7 @@
         <h2>Actions</h2>
         <ul class="list-group mb-4">
             <a href="/car/new" class="list-group-item list-group-item-action">Add Car</a>
-            {{-- <a href="/fees/create" class="list-group-item list-group-item-action">Record Fee Payment</a> --}}
+            <a href="/reviews" class="list-group-item list-group-item-action">Reviews</a>
         </ul>
         {{-- <h2>Search</h2>
         {{ Form::open(['action'=>'ReviewsController@search','method'=>'POST','class'=>'form-inline mt-2 mt-md-0']) }}

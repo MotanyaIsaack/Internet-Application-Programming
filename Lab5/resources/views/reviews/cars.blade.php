@@ -13,19 +13,22 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Make</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Reviews</th>
+                        <th scope="col">Review</th>
+                        <th scope="col">Car</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($reviews as $review)
                     <tr>
-                        <th scope="row">{{ $car->id }}</th>
-                        <td>{{ $car->make }}</td>
-                        <td>{{ $car->model }}</td>
-                        <td><a type="button" href={{ route('reviews.cars', $car->id) }} class="btn btn-sm">Reviews</a>
-                        </td>
+                        <td>{{$review->review}}</td>
+                        <td>{{$review->cars->make}}</td>
+                        <td>{{$review->cars->model}}</td>
+                        {{-- <td>{{$review->produced_on}}</td>
+                        <td><a type="button" href={{ route('reviews.create', $car->id) }}
+                                class="btn btn-dark">Review</a></td> --}}
                     </tr>
+
+                    @endforeach
                 </tbody>
             </table>
         </div>

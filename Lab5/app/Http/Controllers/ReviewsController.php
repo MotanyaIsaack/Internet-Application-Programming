@@ -58,7 +58,7 @@ class ReviewsController extends Controller
     public function show($id)
     {
         $review = Review::find($id);
-
+        
         return view('reviews.show', compact('review'));
     }
 
@@ -94,5 +94,11 @@ class ReviewsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function cars($id)
+    {
+        $reviews = Review::where('car', $id)->get();
+        return view('reviews.cars', compact('reviews'));
     }
 }

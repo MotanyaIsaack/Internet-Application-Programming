@@ -20,5 +20,6 @@ Route::get('reviews', 'ReviewsController@index')->name('reviews.index');;
 Route::get('reviews/create/{carId}', 'ReviewsController@create')->name('reviews.create');
 Route::get('reviews/show/{id}', 'ReviewsController@show')->name('reviews.show');
 Route::post('reviews', 'ReviewsController@store');
+Route::get('reviews/cars/{id}', 'ReviewsController@cars')->name('reviews.cars');
 
 Route::post('/search', 'ReviewsController@search');

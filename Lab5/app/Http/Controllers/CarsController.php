@@ -28,9 +28,9 @@ class CarsController extends Controller
     }
     public function newcar(Request $request){
         $this->validate($request,[
-            'make'=>'required|unique:cars',
-            'model'=>'required|unique:cars',
-            'produced_on'=>'required|unique:cars'
+            'make'=>'required',
+            'model'=>'required',
+            'produced_on'=>'required'
         ]);
 
         $car = new Car;

@@ -41,4 +41,11 @@ class CarsController extends Controller
 
         return redirect('/cars')->with('success','New Car Added Succesfully');
     }
+
+    public function show($id)
+    {
+        $car = Car::find($id);
+
+        return view('cars.pages.show', compact('car'));
+    }
 }

@@ -7,11 +7,11 @@
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
     </head>
     <body>
-        @include('cars.inc.navbar')
+        @include('inc.navbar')
         <div class="container">
-            @include('cars.inc.messages')
+            @include('inc.messages')
             @yield('content')
         </div>
-        @include('cars.inc.footer')
+        @include('inc.footer')
     </body>
 </html>

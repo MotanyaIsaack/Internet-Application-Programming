@@ -11,9 +11,14 @@
 |
 */
 
-Route::get('/cars','CarsController@allcars');
-Route::get('/car/new','CarsController@newcarform');
-Route::post('/car','CarsController@newcar');
+Route::get('/cars', 'CarsController@allcars');
+Route::get('/car/new', 'CarsController@newcarform');
+Route::post('/car', 'CarsController@newcar');
+Route::get('/cars/{id}', 'CarsController@show')->name('cars.show');
 
-Route::resource('reviews','ReviewsController');
-Route::post('/search','ReviewsController@search');
+Route::get('reviews', 'ReviewsController@index')->name('reviews.index');;
+Route::get('reviews/create/{carId}', 'ReviewsController@create')->name('reviews.create');
+Route::get('reviews/show/{id}', 'ReviewsController@show')->name('reviews.show');
+Route::post('reviews', 'ReviewsController@store');
+
+Route::post('/search', 'ReviewsController@search');

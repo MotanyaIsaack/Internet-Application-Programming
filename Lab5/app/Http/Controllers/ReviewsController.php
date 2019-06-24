@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Review;
 
 class ReviewsController extends Controller
 {
@@ -13,7 +14,9 @@ class ReviewsController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Review::all();
+
+        return view('reviews.index', compact('reviews'));
     }
 
     /**
@@ -21,9 +24,10 @@ class ReviewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $car_id = $id;
+        return view('reviews.create', compact('car_id'));
     }
 
     /**
@@ -34,7 +38,15 @@ class ReviewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'review' => 'required',
+            'car' => 'required'
+        ]);
+
+        // dd($validated);
+        Review::create($validated);
+
+        return redirect()->route('reviews.index');
     }
 
     /**
@@ -45,7 +57,9 @@ class ReviewsController extends Controller
      */
     public function show($id)
     {
-        //
+        $review = Review::find($id);
+
+        return view('reviews.show', compact('review'));
     }
 
     /**

@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
+    protected $guarded = [];
+
     public function cars()
     {
-        $this->belongsTo('App\Car');
+        return $this->belongsTo(Car::class, 'car');
     }
 }
